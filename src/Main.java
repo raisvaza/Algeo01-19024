@@ -1,13 +1,14 @@
 import java.util.*;
+import java.io.*;
 
 class Main {
-    public static Scanner in = new Scanner(System.in); //Scanner
+    //Scanner
+    public static Scanner in = new Scanner(System.in); 
 
     //Method main
     public static void main (String[] args){
         utama();    
     }
-
 
     //Prosedur program utama
     static void utama(){
@@ -20,23 +21,17 @@ class Main {
         System.out.println("5. Regresi Linier Berganda");
         System.out.println("6. Keluar");
         System.out.println();
-        System.out.println("Masukkan pilihan: ");
+        System.out.print("Masukkan pilihan: ");
         int pilihan = in.nextInt();
 
         while(true){
-            if (pilihan == 1){
-                spl();
-            } else if (pilihan == 2){
-                det();
-            } else if (pilihan == 3){
-                inv();
-            } else if (pilihan == 4){
-                interPol();
-            } else if (pilihan == 5){
-                reg();
-            } else if(pilihan == 6){
-                System.exit(0);
-            } else{
+            if (pilihan == 1) spl();
+            // else if (pilihan == 2) det();
+            // else if (pilihan == 3) inv();
+            // else if (pilihan == 4) interPol();
+            // else if (pilihan == 5) reg();
+            else if(pilihan == 6) System.exit(0);
+            else{
                 System.out.println("Masukan salah. Silakan masukkan ulang!");
                 pilihan = in.nextInt();
             }
@@ -49,138 +44,183 @@ class Main {
     static void spl(){
         System.out.println();
         System.out.println("=== Sistem Persamaan Linier ===");
-        System.out.println("1. Bakal Program");
-        System.out.println(".......");
+        System.out.println("1. Metode Eliminasi Gauss");
+        System.out.println("2. Metode Eliminasi Gauss-Jordan");
+        System.out.println("3. Metode Matriks Balikan");
+        System.out.println("4. Kaidah Cramer");
         System.out.println("99. Kembali");
         System.out.println();
-        System.out.println("Masukkan pilihan: ");
+        System.out.print("Masukkan pilihan: ");
         int pilihan = in.nextInt();
+        System.out.println();
 
         while(true){
-            if(pilihan == 99){
-                utama();
-            }else if(pilihan == 1){
-                Matriks spl = new Matriks();
-                spl.isimatriks(3,3);
-                spl.tulismatriks(3,3);
-                System.out.println("Menuju menu utama....");
-                utama();
-            }else{
-                System.out.println("Masukan salah. Silakan ulangi masukan!");
-                pilihan = in.nextInt();
-            }
-        }
-    }
+            if(pilihan == 99) utama();
+            else if(pilihan == 1){
+                System.out.println("=== Metode Eliminasi Gauss ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
 
-    //Prosedur menu Determinan
-    static void det(){
-        System.out.println();
-        System.out.println("=== Determinan ===");
-        System.out.println("1. Bakal Program");
-        System.out.println(".......");
-        System.out.println("99. Kembali");
-        System.out.println();
-        System.out.println("Masukkan pilihan: ");
-        int pilihan = in.nextInt();
-
-        while(true){
-            if(pilihan == 99){
-                utama();
-            }else if(pilihan == 1){
-                Matriks det = new Matriks();
-                det.isimatriks(3,3);
-                det.tulismatriks(3,3);
-                System.out.println("Menuju menu utama....");
-                utama();
-            }else{
-                System.out.println("Masukan salah. Silakan ulangi masukan!");
-                pilihan = in.nextInt();
-            }
-        }
-
-    }
-
-    //Prosedur menu Matriks Balikan
-    static void inv(){
-        System.out.println();
-        System.out.println("=== Matriks Balikan ===");
-        System.out.println("1. Bakal Program");
-        System.out.println(".......");
-        System.out.println("99. Kembali");
-        System.out.println();
-        System.out.println("Masukkan pilihan: ");
-        int pilihan = in.nextInt();
-        
-        while(true){
-            if(pilihan == 99){
-                utama();
-            }else if(pilihan == 1){
-                Matriks inv = new Matriks();
-                inv.isimatriks(3,3);
-                inv.tulismatriks(3,3);
-                System.out.println("Menuju menu utama....");
-                utama();
-            }else{
-                System.out.println("Masukan salah. Silakan ulangi masukan!");
-                pilihan = in.nextInt();
-            }
-        }
-
-    }
-
-    //Prosedur Interpolasi Polinom
-    static void interPol(){
-        System.out.println();
-        System.out.println("=== Interpolasi Polinom ===");
-        System.out.println("1. Bakal Program");
-        System.out.println(".......");
-        System.out.println("99. Kembali");
-        System.out.println();
-        System.out.println("Masukkan pilihan: ");
-        int pilihan = in.nextInt();
-        
-        while(true){
-            if(pilihan == 99){
-                utama();
-            }else if(pilihan == 1){
-                Matriks interPol = new Matriks();
-                interPol.isimatriks(3,3);
-                interPol.tulismatriks(3,3);
-                System.out.println("Menuju menu utama....");
-                utama();
-            }else{
-                System.out.println("Masukan salah. Silakan ulangi masukan!");
-                pilihan = in.nextInt();
-            }
-        }
-
-    }
+                //Membuat objek Spl
+                Spl spl = new Spl();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan jumlah persamaan: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan jumlah peubah: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m+1);
     
-    //Prosedur Regresi Linier Berganda
-    static void reg(){
-        System.out.println();
-        System.out.println("=== Regresi Linier Berganda ===");
-        System.out.println("1. Bakal Program");
-        System.out.println(".......");
-        System.out.println("99. Kembali");
-        System.out.println();
-        System.out.println("Masukkan pilihan: ");
-        int pilihan = in.nextInt();
-        
-        while(true){
-            if(pilihan == 99){
+                        //Membaca persamaan
+                        spl.bacaMatriks(M, n, m+1);
+                        System.out.println();
+                        
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+
+                //Mengubah matriks augmented ke Matriks eselon
+                M.eliminasiGauss();
+                System.out.println("Matriks Eselon Baris: ");
+                
+                //Tulis Matriks eselon
+                M.tulisMatriks();
+                System.out.println();
+                                        
+                //Variabel solusi
+                double[][] solusi = new double[100][100];
+                int[] jumlahSolusi = new int[1];
+                                        
+                //Menuliskan solusi
+                spl.solusiEliminasiGauss(M, solusi, jumlahSolusi);
+                if(jumlahSolusi[0] == 0) System.out.println("Tidak ada solusi"); //Tidak ada solusi
+                else {
+                    System.out.println("Solusi Sistem Persamaan: ");
+                    spl.tulisSolusi(solusi, M);
+                }
+                System.out.println();
+
+                //Kembali ke menu utama
+                System.out.println("Menuju menu utama....");
                 utama();
-            }else if(pilihan == 1){
-                Matriks reg = new Matriks();
-                reg.isimatriks(3,3);
-                reg.tulismatriks(3,3);
+
+            }else if (pilihan == 2){
+                System.out.println("=== Metode Eliminasi Gauss-Jordan ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+
+                //Membuat objek Spl
+                Spl spl = new Spl();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan jumlah persamaan: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan jumlah peubah: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m+1);
+    
+                        //Membaca persamaan
+                        spl.bacaMatriks(M, n, m+1);
+                        System.out.println();
+
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+                    }
+                    else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+
+                //Mengubah matriks augmented ke Matriks eselon tereduksi
+                M.eliminasiGaussJordan();
+                System.out.println("Matriks Eselon Baris Tereduksi: ");
+
+                //Tulis Matriks eselon tereduksi
+                M.tulisMatriks();
+                System.out.println();
+                
+                //Variabel solusi
+                double[][] solusi = new double[100][100];
+                int[] jumlahSolusi = new int[1];
+
+                //Menuliskan solusi
+                spl.solusiEliminasiGaussJordan(M, solusi, jumlahSolusi);
+                if(jumlahSolusi[0] == 0){
+                    System.out.println("Tidak ada solusi"); //Tidak ada solusi
+                } else {
+                    System.out.println("Solusi Sistem Persamaan: ");
+                    spl.tulisSolusi(solusi, M);
+                }
+                System.out.println();
+
+                //Kembali ke menu utama
+                System.out.println("Menuju menu utama....");
+                utama();
+
+            }else if (pilihan == 3){
+                System.out.println("=== Metode Matriks Balikan ===");
+                System.out.println("Menuju menu utama....");
+                utama();
+            }else if (pilihan == 4){
+                System.out.println("=== Kaidah Cramer ===");
                 System.out.println("Menuju menu utama....");
                 utama();
             }else{
-                System.out.println("Masukan salah. Silakan ulangi masukan!");
+                System.out.print("Masukan salah. Silakan ulangi masukan! ");
                 pilihan = in.nextInt();
+                System.out.println();
             }
         }
-
     }
+
 }
