@@ -1,5 +1,28 @@
 # Algeo01-19024
 
+## Gambaran Program
+
+#### Sistem Persamaan Linier
+1. Metode Eliminasi Gauss
+2. Metode Eliminasi Gauss-Jordan
+3. Matriks Balikan
+4. Kaidah Cramer
+
+#### Determinan
+1. Matriks Segitiga Atas
+2. Matriks Segitiga Bawah
+3. Ekspansi Kofaktor
+
+#### Matriks Balikan
+1. Metode Eliminasi Gauss
+2. Matriks Kofaktor
+
+#### Interpolasi Polinom
+
+#### Regresi Linier Berganda
+
+#### Keluar
+
 ## Compile and Run
 
 ### Compile
