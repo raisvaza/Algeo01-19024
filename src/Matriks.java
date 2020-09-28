@@ -1,7 +1,4 @@
 import java.util.*;
-
-import javax.sound.sampled.Line;
-
 import java.io.*;
 
 class Matriks {
@@ -57,7 +54,7 @@ class Matriks {
     }
 
     //Prosedur isi matriks dengan keyboard
-    public void isimatriks(int N, int M){
+    public void isiMatriks(int N, int M){
         int i,j;
 
         for (i=1; i<=N; i++){
@@ -103,7 +100,8 @@ class Matriks {
     public void tulisMatriks(){
         for(int i=1; i<= this.GetBrs(); i++){
             for (int j=1; j<= this.GetKol(); j++){
-                System.out.print(this.GetElmt(i,j) + " ");
+                if((this.GetElmt(i,j)*10)%10 == 0) System.out.printf("%.0f ", this.GetElmt(i,j));
+                else System.out.printf("%.2f ", this.GetElmt(i,j));
             }
             System.out.println();
         }
@@ -116,6 +114,26 @@ class Matriks {
             temp = this.GetElmt(i1,j);
             SetElmt(i1, j, this.GetElmt(i2,j));
             SetElmt(i2, j, temp);
+        }
+    }
+
+    //Mengalikan elemen diagonal Matriks
+    public double kaliDiagonal(){
+        double sum = 1;
+        for(int i=1; i<=this.GetBrs(); i++){
+            for(int j=1; j<=this.GetKol(); j++){
+                if(j==i) sum *= this.GetElmt(i,j);
+            }
+        }
+        return sum;
+    }
+
+    //Prosedur salin Matriks
+    public void salinMatriks(Matriks Msal){
+        for(int i = 1; i <= this.GetBrs(); i++){
+            for(int j = 1; j <= this.GetKol(); j++){
+                Msal.SetElmt(i,j,this.GetElmt(i,j));
+            }
         }
     }
 
@@ -224,5 +242,45 @@ class Matriks {
                 kol++;
             }
         }
+    }
+
+    //Ubah ke Matriks Segitiga Bawah
+    public void segitigaBawah(int jmlTukarBrs){
+        if(this.GetKol() == this.GetBrs()){
+            int brs = 1;
+            int kol = 1;
+            int indeksMaks;
+            while(brs <= this.GetBrs() && kol<=this.GetKol()){
+                indeksMaks = -1; 
+                //Mencari baris yang tidak bernilai 0 dalam suatu kolom
+                for(int i = brs; i <= this.GetBrs() && indeksMaks == -1; i++){
+                    if(this.GetElmt(i,kol) != 0) indeksMaks = i;
+                }
+    
+                //Jika tidak ada baris bernilai nol di sebuah kolom, lanjut ke kolom selanjutnya
+                if(indeksMaks == -1) kol++;
+    
+                //Jika ada akan diproses
+                else{
+                    this.tukarBrs(brs,indeksMaks); //Tukar baris
+                    
+                    if(brs != indeksMaks) jmlTukarBrs+=1;   //Menghitung jumlah tukar baris
+                    
+                    //Mengurangi seluruh kolom di bawah 1 utama pada baris dengan rasio baris lain
+                    for(int i = brs+1; i <= this.GetBrs(); i++){
+                        double rasio = (-1*this.GetElmt(i, kol)) / this.GetElmt(brs,kol);
+                        for (int j = kol; j <= this.GetKol(); j++){
+                            this.SetElmt(i, j , this.GetElmt(i,j) + rasio*this.GetElmt(brs,j));
+                        }
+                    }
+    
+                    //Lanjut ke baris dan pengecekan kolom selajuntnya
+                    brs++;
+                    kol++;
+                    
+                }
+            }
+        }
+
     }
 }

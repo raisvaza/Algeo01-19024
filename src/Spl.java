@@ -154,14 +154,24 @@ class Spl extends Matriks{
                 if(solusi[i][j] != 0){
                     if(tulisDulu){
                         tulisDulu = false;
-                        System.out.printf("(%.2f)T[%d]", solusi[i][j],j); 
-                    } else System.out.printf(" + (%.2f)T[%d]", solusi[i][j],j);
+                        if((solusi[i][j]*10)%10 == 0) System.out.printf("(%.0f)T[%d]", solusi[i][j],j); 
+                        else System.out.printf("(%.2f)T[%d]", solusi[i][j],j); 
+                    } else {
+                        if ((solusi[i][j]*10)%10 == 0) System.out.printf(" + (%.0f)T[%d]", solusi[i][j],j);
+                        else System.out.printf(" + (%.2f)T[%d]", solusi[i][j],j);
+                    }
                 }
             }
             //Jika solusi di kolom ujung tidak 0
             if(solusi[i][variabel+1] != 0){
-                if(tulisDulu) System.out.println(solusi[i][variabel+1]);    //Jika solusi x-sekian tunggal
-                else System.out.printf(" + (%.2f)%n", solusi[i][variabel+1]); //Konstanta x-sekian banyak
+                if(tulisDulu){ //Jika solusi x-sekian tunggal
+                    if ((solusi[i][variabel+1]*10)%10 == 0) System.out.printf("%.0f\n",solusi[i][variabel+1]);
+                    else System.out.printf("%.2f\n",solusi[i][variabel+1]);
+                }   
+                else { //Konstanta x-sekian banyak
+                    if ((solusi[i][variabel+1]*10)%10 == 0) System.out.printf(" + (%.0f)%n", solusi[i][variabel+1]);
+                    else System.out.printf(" + (%.2f)%n", solusi[i][variabel+1]);
+                }
             } else{
                 if(tulisDulu) System.out.println((double)0); //Jika solusi x-sekian tunggal
                 else System.out.println();
@@ -169,4 +179,73 @@ class Spl extends Matriks{
         }
     }
 
+    //Membaca koefisien dari x-sekian melalui file
+    public void bacaKoefFile(File inputfile, Matriks M, double konstanta[]){
+        int brs = 0, kol = 0;
+
+        try{
+            Scanner in = new Scanner(inputfile);
+            while(in.hasNextLine()){
+                String baris = in.nextLine();
+                brs++;
+
+                Scanner inLine = new Scanner(baris);
+                while(inLine.hasNextDouble() && brs == 1){
+                    inLine.nextDouble();
+                    kol++;
+                }
+            }
+
+            in.close();
+            M.SetBrs(brs);
+            M.SetKol(kol-1);
+
+            in = new Scanner(inputfile);
+            for(int i = 1; i <= brs; i++){
+                for(int j = 1; j <= kol; j++) {
+                    if(j == kol){
+                        konstanta[i] = in.nextDouble();
+                    } else M.SetElmt(i,j,in.nextDouble());
+                }
+            }
+        } 
+        catch (FileNotFoundException ex){
+            System.out.println("File tidak ditemukan");
+        }
+    }
+
+    //Membaca koefisien x-sekian melalui keyboard
+    public void bacaKoefKeyboard(Matriks M, double[] konstanta, int n, int m){
+        for(int i=1; i<= n; i++){
+            System.out.println();
+            System.out.println("Masukkan persamaan ke-" + i + " :");
+            for (int j = 1; j<= m; j++){
+                if (j == m) {
+                    System.out.print("Masukkan konstanta: ");
+                    double x = in.nextDouble();
+                    konstanta[i] = x;
+                }else {
+                    System.out.print("Masukkan koefisien x[" + j + "]: ");
+                    double x = in.nextDouble();
+                    M.SetElmt(i,j,x);
+                }
+            }
+        }
+    }
+
+    //Ubah Matriks untuk SPL menggunakan Kaidah Cramer
+    public void ubahKol(Matriks M, double konstanta [], int j ){
+        for(int i = 1; i<= M.GetBrs(); i++){
+            M.SetElmt(i,j, konstanta[i]);
+        }
+    }
+
+    //Perpangkatan bilangan bulat dengan hasil tipe double
+    public double pangkat(int x, int y){
+        double result = 1;
+        for(int i=1; i<=y; i++){
+            result *= x;
+        }
+        return result;
+    }
 }
