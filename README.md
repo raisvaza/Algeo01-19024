@@ -1,5 +1,8 @@
 # Algeo01-19024
 
+## Link Buat Laporan
+https://docs.google.com/document/d/1NkHhXP9XvlY5Ir_qipJVnDc7OsVGMQsNQwBOh5ShlZI/edit
+
 ## Gambaran Program
 
 #### Sistem Persamaan Linier
