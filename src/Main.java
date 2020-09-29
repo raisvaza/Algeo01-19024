@@ -66,6 +66,7 @@ class Main {
                 Spl spl = new Spl();
                 //Membuat objek Matriks
                 Matriks M = new Matriks();
+               
                 
                 while(true){
                     if(masukan == 1){
@@ -114,18 +115,34 @@ class Main {
                 //Variabel solusi
                 double[][] solusi = new double[100][100];
                 int[] jumlahSolusi = new int[1];
+
+                //Scanner output file
+                Scanner filex = new Scanner(System.in);
                                         
                 //Menuliskan solusi
                 spl.solusiEliminasiGauss(M, solusi, jumlahSolusi);
-                if(jumlahSolusi[0] == 0) System.out.println("Tidak ada solusi"); //Tidak ada solusi
+                if(jumlahSolusi[0] == 0) {
+                    System.out.println("Tidak ada solusi"); //Tidak ada solusi
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    try{
+                        Formatter file = new Formatter(namafile);
+                        file.format("Tidak ada solusi");
+                    } catch(FileNotFoundException ex){
+                        System.out.println("Error terjadi");
+                    }
+                    
+                }
                 else {
                     System.out.println("Solusi Sistem Persamaan: ");
-                    spl.tulisSolusi(solusi, M);
+                    spl.tulisSolusi(solusi, M);					
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    spl.tulisFileElimGauss(namafile, solusi, M);
                 }
-                System.out.println();
 
                 //Kembali ke menu utama
-                System.out.println("Menuju menu utama....");
+                System.out.println("\nMenuju menu utama....");
                 utama();
 
             }else if (pilihan == 2){
@@ -190,18 +207,33 @@ class Main {
                 double[][] solusi = new double[100][100];
                 int[] jumlahSolusi = new int[1];
 
+                //Scanner output file
+                Scanner filex = new Scanner(System.in);
+
                 //Menuliskan solusi
                 spl.solusiEliminasiGaussJordan(M, solusi, jumlahSolusi);
                 if(jumlahSolusi[0] == 0){
                     System.out.println("Tidak ada solusi"); //Tidak ada solusi
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    try{
+                        Formatter file = new Formatter(namafile);
+                        file.format("Tidak ada solusi");
+                        file.close();
+                    }catch(FileNotFoundException ex){
+                        System.out.println("Error terjadi");
+                    }
+                    
                 } else {
                     System.out.println("Solusi Sistem Persamaan: ");
-                    spl.tulisSolusi(solusi, M);
+                    spl.tulisSolusi(solusi, M);					
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    spl.tulisFileElimGaussJordan(namafile, solusi, M);
                 }
-                System.out.println();
 
                 //Kembali ke menu utama
-                System.out.println("Menuju menu utama....");
+                System.out.println("\nMenuju menu utama....");
                 utama();
 
             }else if (pilihan == 3){
@@ -220,6 +252,9 @@ class Main {
                 Matriks Mhasil = new Matriks();
                 //Membuat array yang berisi konstanta persamaan
                 double[] konstanta = new double[100];
+
+                //Scanner output file
+                Scanner filex = new Scanner(System.in);
 
                 while(true){
                     if(masukan == 1){
@@ -269,8 +304,33 @@ class Main {
                         Mhasil.SetKol(1);
                         spl.kaliMatriksKonstanta(Mtemp,konstanta,Mhasil);
                         spl.tulisHasilSPLIvnvers(Mhasil);
-                    }else System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan");
-                }else System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan");
+                        System.out.print("\nMasukkan nama file output: ");
+                        String namafile = filex.nextLine();
+                        spl.tulisFileSPLInvers(namafile, Mhasil, Mtemp);
+                    }else {
+                        System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan.");
+                        System.out.print("\nMasukkan nama file output: ");
+                        String namafile = filex.nextLine();
+                        try{
+                            Formatter file = new Formatter(namafile);
+                            file.format("Metode Matriks Balikan tidak dapat menyelesaikan persamaan.");
+                            file.close();
+                        }catch(FileNotFoundException ex){
+                            System.out.println("Error terjadi");
+                        }  
+                    } 
+                }else {
+                    System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan.");
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    try{
+                        Formatter file = new Formatter(namafile);
+                        file.format("Metode Matriks Balikan tidak dapat menyelesaikan persamaan.");
+                        file.close();
+                    } catch(FileNotFoundException ex){
+                        System.out.println("Error terjadi");
+                    }
+                }
 
                 //Kembali ke menu utama
                 System.out.println("\nMenuju menu utama....");
@@ -291,6 +351,9 @@ class Main {
                 Matriks Mtemp = new Matriks();
                 //Membuat array yang berisi konstanta persamaan
                 double[] konstanta = new double[100];
+
+                //Scanner output file
+                Scanner filex = new Scanner(System.in);
 
                 while(true){
                     if(masukan == 1){
@@ -335,7 +398,6 @@ class Main {
                 M.segitigaBawah(jmlhTkrBrs);
                 double detM = M.kaliDiagonal() * spl.pangkat(-1,jmlhTkrBrs);
 
-
                 if (M.GetBrs() == M.GetKol()){
                     if ((detM*10)%10 == 0)  System.out.printf("det(M) = %.0f\n", detM);
                     else System.out.printf("det(M) = %.2f\n", detM);
@@ -358,11 +420,44 @@ class Main {
                             if(((detMi[j]/detM)*10)%10 == 0) System.out.printf("x[%d] = %.0f\n", j, (detMi[j]/detM)); 
                             else System.out.printf("x[%d] = %.2f\n", j, (detMi[j]/detM));
                         }
-                    }else System.out.println("\nKaidah Cramer tidak dapat menyelesaikan persamaan");
-                } else System.out.println("\nKaidah Cramer tidak dapat menyelesaikan persamaan");
 
-                System.out.println();
-                System.out.println("Menuju menu utama....");
+                        System.out.print("\nMasukkan nama file output: ");
+                        String namafile = filex.nextLine();
+
+                        try{
+                            Formatter file = new Formatter(namafile);
+                            spl.tulisFileSPLCramer(namafile, detM, detMi, M);
+                            file.close();
+                        }catch(FileNotFoundException ex){
+                            System.out.println("Error terjadi");
+                        }
+
+                    }else {
+                        System.out.println("\nKaidah Cramer tidak dapat menyelesaikan persamaan");
+                        System.out.print("\nMasukkan nama file output: ");
+                        String namafile = filex.nextLine();
+                        try{
+                            Formatter file = new Formatter(namafile);
+                            file.format("Kaidah Cramer tidak dapat menyelesaikan persamaan");
+                            file.close();
+                        }catch(FileNotFoundException ex){
+                            System.out.println("Error terjadi");
+                        }  
+                    } 
+                } else {
+                    System.out.println("Kaidah Cramer tidak dapat menyelesaikan persamaan");
+                    System.out.print("\nMasukkan nama file output: ");
+                    String namafile = filex.nextLine();
+                    try{
+                        Formatter file = new Formatter(namafile);
+                        file.format("Kaidah Cramer tidak dapat menyelesaikan persamaan");
+                        file.close();
+                    }catch(FileNotFoundException ex){
+                        System.out.println("Error terjadi");
+                    }  
+                } 
+
+                System.out.println("\nMenuju menu utama....");
                 utama();
 
             }else{
