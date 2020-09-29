@@ -283,4 +283,14 @@ class Matriks {
         }
 
     }
+
+    //Menambahkan matriks identitas pada matriks augmented
+    public void isiIdentitas(Matriks M){
+        for(int i = 1; i<=this.GetBrs(); i++){
+            for(int j = this.GetKol()+1 ; j <= M.GetKol(); j++){
+                if(j-i == this.GetKol()) M.SetElmt(i,j,1);
+                else M.SetElmt(i,j,0);
+            }
+        }
+    }
 }

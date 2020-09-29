@@ -248,4 +248,37 @@ class Spl extends Matriks{
         }
         return result;
     }
+
+    //Kali Matriks koefisien x-sekian dengan matriks konstanta
+    public void kaliMatriksKonstanta(Matriks M1, double[] M2, Matriks Mhasil){
+        for(int i = 1; i<=M1.GetBrs(); i++){
+            for(int j = 1; j<=1; j++){
+                for(int k = (M1.GetKol()/2)+1; k<=M1.GetKol(); k++){
+                    Mhasil.SetElmt(i,j,Mhasil.GetElmt(i,j)+M1.GetElmt(i,k)*M2[k-(M1.GetKol()/2)]);
+                }
+            }
+        }
+    }
+
+    //Menuliskan hasil dari siste persamaan dengan metode matriks balikan
+    public void tulisHasilSPLIvnvers(Matriks M){
+        System.out.println("Solusi Sistem Persamaan: ");
+        for(int i = 1; i<=M.GetBrs(); i++){
+            if((M.GetElmt(i,1)*10)%10 == 0) System.out.printf("x[%d] = %.0f\n", i,M.GetElmt(i,1));
+            else System.out.printf("x[%d] = %.2f\n", i,M.GetElmt(i,1));
+        }
+    }
+
+    //Mengecek apakah matriks yang telah dilakukan OBE dapat memberikan solusi tunggal dalam metode matriks balikan
+    public boolean cekDiagonalInvers(Matriks M){
+        boolean cek = true;
+        for(int i = 1; i<=M.GetBrs(); i++){
+            for (int j = 1; j<=M.GetKol(); j++){
+                if(i==j){
+                    if(M.GetElmt(i,j) != 1) cek = false;
+                }
+            }
+        }
+        return cek;
+    }
 }

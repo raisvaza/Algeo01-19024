@@ -36,8 +36,6 @@ class Main {
                 pilihan = in.nextInt();
             }
         }
-
-
     }
 
     //Prosedur menu Sistem Persamaan Linier
@@ -82,7 +80,6 @@ class Main {
                         //Membaca persamaan
                         spl.bacaMatriks(M, n, m+1);
                         System.out.println();
-                        
                         break;
 
                     } else if (masukan == 2) {
@@ -209,23 +206,75 @@ class Main {
 
             }else if (pilihan == 3){
                 System.out.println("=== Metode Matriks Balikan ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
 
-                System.out.print("Masukkan jumlah persamaan: ");
-                int n = in.nextInt();
-                System.out.print("Masukkan jumlah peubah: ");
-                int m = in.nextInt();
-                Matriks M = new Matriks(n,m+1);
-                
+                //Membuat objek Spl
                 Spl spl = new Spl();
-                int jmlTukarBrs=0;
-                M.isiMatriks(n,m+1);
-                M.segitigaBawah(jmlTukarBrs);
-                double detM = Math.pow(-1,jmlTukarBrs) *  M.kaliDiagonal();
-                M.tulisMatriks();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+                Matriks Mtemp = new Matriks();
+                Matriks Mhasil = new Matriks();
+                //Membuat array yang berisi konstanta persamaan
+                double[] konstanta = new double[100];
 
-                System.out.println("Menuju menu utama....");
+                while(true){
+                    if(masukan == 1){
+                        //Membaca masukan dari keyboard
+                        System.out.print("Masukkan jumlah persamaan: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan jumlah peubah: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+                        spl.bacaKoefKeyboard(M, konstanta, n, m+1);
+                        break;
+                    }else if (masukan == 2){
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        spl.bacaKoefFile(file, M, konstanta);
+                        break;
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt(); 
+                    }
+                }
+
+                if(M.GetBrs() == M.GetKol()){
+                    //Menerapkan eliminasi Gauss-Jordan untuk memindahkan matriks identitas ke kiri
+                    Mtemp.SetBrs(M.GetBrs());
+                    Mtemp.SetKol(2*M.GetKol());
+                    M.salinMatriks(Mtemp);
+                    M.isiIdentitas(Mtemp);
+                    Mtemp.eliminasiGaussJordan();
+
+                    if (spl.cekDiagonalInvers(Mtemp)){
+                        System.out.println("\nMatriks hasil operasi baris elementer: ");
+                        Mtemp.tulisMatriks();
+                        System.out.println();
+                        
+                        //Menuliskan hasil sistem persamaan
+                        Mhasil.SetBrs(Mtemp.GetBrs());
+                        Mhasil.SetKol(1);
+                        spl.kaliMatriksKonstanta(Mtemp,konstanta,Mhasil);
+                        spl.tulisHasilSPLIvnvers(Mhasil);
+                    }else System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan");
+                }else System.out.println("\nMetode Matriks Balikan tidak dapat menyelesaikan persamaan");
+
+                //Kembali ke menu utama
+                System.out.println("\nMenuju menu utama....");
                 utama();
-
 
             }else if (pilihan == 4){
                 System.out.println("=== Kaidah Cramer ===");
@@ -242,10 +291,10 @@ class Main {
                 Matriks Mtemp = new Matriks();
                 //Membuat array yang berisi konstanta persamaan
                 double[] konstanta = new double[100];
-                
 
                 while(true){
                     if(masukan == 1){
+                        //Masukan dari keyboard
                         System.out.print("Masukkan jumlah persamaan: ");
                         int n = in.nextInt();
                         System.out.print("Masukkan jumlah peubah: ");
@@ -253,6 +302,7 @@ class Main {
                         M.SetBrs(n);
                         M.SetKol(m);
                         spl.bacaKoefKeyboard(M, konstanta, n, m+1);
+                        System.out.println();
                         break;
                     }else if (masukan == 2){
                         //Membaca matriks yang ada di file
@@ -278,14 +328,19 @@ class Main {
                 Mtemp.SetBrs(M.GetBrs());
                 Mtemp.SetKol(M.GetKol());
                 double[] detMi = new double[M.GetKol()+1];
+
+                //Menghitung deteminan M
                 M.salinMatriks(Mtemp);
                 int jmlhTkrBrs = 0;
                 M.segitigaBawah(jmlhTkrBrs);
                 double detM = M.kaliDiagonal() * spl.pangkat(-1,jmlhTkrBrs);
+
+
                 if (M.GetBrs() == M.GetKol()){
                     if ((detM*10)%10 == 0)  System.out.printf("det(M) = %.0f\n", detM);
                     else System.out.printf("det(M) = %.2f\n", detM);
     
+                    //Menghitung Determinan D(i)
                     for(int j=1; j<=M.GetKol(); j++){
                         Mtemp.salinMatriks(M);
                         spl.ubahKol(M,konstanta,j);
@@ -296,6 +351,7 @@ class Main {
                         else System.out.printf("det(M%d) = %.2f\n", j, detMi[j]);
                     }
 
+                    //Menuliskan solusi tunggal jika ada
                     if (detM != 0){
                         System.out.println("\nSolusi Sistem Persamaan: ");
                         for(int j=1; j<=M.GetKol(); j++){
@@ -303,11 +359,12 @@ class Main {
                             else System.out.printf("x[%d] = %.2f\n", j, (detMi[j]/detM));
                         }
                     }else System.out.println("\nKaidah Cramer tidak dapat menyelesaikan persamaan");
-                } else System.out.println("Kaidah Cramer tidak dapat menyelesaikan persamaan");
+                } else System.out.println("\nKaidah Cramer tidak dapat menyelesaikan persamaan");
 
                 System.out.println();
                 System.out.println("Menuju menu utama....");
                 utama();
+
             }else{
                 System.out.print("Masukan salah. Silakan ulangi masukan! ");
                 pilihan = in.nextInt();
