@@ -1,0 +1,12 @@
+Matriks Eselon Baris: 
+0 1 0 0 1 0 2 
+0 0 0 1 1 0 -1 
+0 0 0 0 1 -1 1 
+
+Solusi dari sistem persamaan adalah: 
+x[1] = (1)T[1]
+x[2] = (-1)T[6] + (1)
+x[3] = (1)T[3]
+x[4] = (-1)T[6] + (-2)
+x[5] = (1)T[6] + (1)
+x[6] = (1)T[6]
