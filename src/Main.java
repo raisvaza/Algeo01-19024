@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 
+
 class Main {
     //Scanner
     public static Scanner in = new Scanner(System.in); 
@@ -371,5 +372,9 @@ class Main {
                 System.out.println();
             }
         }
+    }
+
+    static void interPol(){
+               
     }
 }
