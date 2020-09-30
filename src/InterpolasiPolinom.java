@@ -25,7 +25,8 @@ public class InterpolasiPolinom extends Matriks{
         int i,j,k;
         double [] [] temporary;
         temporary = new double[this.derajat+1][this.derajat+2];
-
+        k = 0;
+        
         for (i = 0; i < this.brs; i++){
             for (j = 0; j < this.kol; j++){
                 if (j != 1){
