@@ -281,4 +281,153 @@ class Spl extends Matriks{
         }
         return cek;
     }
+
+    //Menulis output file untuk SPL Eliminasi Gauss
+    public void tulisFileElimGauss(String namafile, double[][] solusi, Matriks M){
+        try{
+            Formatter file = new Formatter(namafile);
+            file.format("Matriks Eselon Baris: %n");
+            for(int i=1; i<= M.GetBrs(); i++){
+                for (int j=1; j<= M.GetKol(); j++){
+                    if((M.GetElmt(i,j)*10)%10 == 0) file.format("%.0f ", M.GetElmt(i,j));
+                    else file.format("%.2f ", M.GetElmt(i,j));
+                }
+                file.format("%n");
+            }
+            file.format("%nSolusi dari sistem persamaan adalah: %n");
+            int variabel = M.GetKol()-1;
+            for (int i = 1; i <= variabel; i++){
+                file.format("x[" + i + "] = ");
+                boolean tulisDulu = true;
+    
+                //Mengecek solusi banyak dari x-sekian
+                for (int j = 1; j <= variabel; j++){
+                    if(solusi[i][j] != 0){
+                        if(tulisDulu){
+                            tulisDulu = false;
+                            if((solusi[i][j]*10)%10 == 0) file.format("(%.0f)T[%d]", solusi[i][j],j); 
+                            else file.format("(%.2f)T[%d]", solusi[i][j],j); 
+                        } else {
+                            if ((solusi[i][j]*10)%10 == 0) file.format(" + (%.0f)T[%d]", solusi[i][j],j);
+                            else file.format(" + (%.2f)T[%d]", solusi[i][j],j);
+                        }
+                    }
+                }
+                //Jika solusi di kolom ujung tidak 0
+                if(solusi[i][variabel+1] != 0){
+                    if(tulisDulu){ //Jika solusi x-sekian tunggal
+                        if ((solusi[i][variabel+1]*10)%10 == 0) file.format("%.0f%n",solusi[i][variabel+1]);
+                        else file.format("%.2f%n",solusi[i][variabel+1]);
+                    }   
+                    else { //Konstanta x-sekian banyak
+                        if ((solusi[i][variabel+1]*10)%10 == 0) file.format(" + (%.0f)%n", solusi[i][variabel+1]);
+                        else file.format(" + (%.2f)%n", solusi[i][variabel+1]);
+                    }
+                } else{
+                    if(tulisDulu) file.format("0.0 %n"); //Jika solusi x-sekian tunggal
+                    else file.format("%n");
+                }
+            }
+            file.close();
+        } catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+    }
+
+    //Menuliskan output file untuk SPL Eliminasi Gauss-Jordan
+    public void tulisFileElimGaussJordan(String namafile, double[][] solusi, Matriks M){
+        try{
+        Formatter file = new Formatter(namafile);
+        file.format("Matriks Eselon Baris Tereduksi: %n");
+        for(int i=1; i<= M.GetBrs(); i++){
+            for (int j=1; j<= M.GetKol(); j++){
+                if((M.GetElmt(i,j)*10)%10 == 0) file.format("%.0f ", M.GetElmt(i,j));
+                else file.format("%.2f ", M.GetElmt(i,j));
+            }
+            file.format("%n");
+        }
+        file.format("%nSolusi dari sistem persamaan adalah: %n");
+        int variabel = M.GetKol()-1;
+        for (int i = 1; i <= variabel; i++){
+            file.format("x[" + i + "] = ");
+            boolean tulisDulu = true;
+
+            //Mengecek solusi banyak dari x-sekian
+            for (int j = 1; j <= variabel; j++){
+                if(solusi[i][j] != 0){
+                    if(tulisDulu){
+                        tulisDulu = false;
+                        if((solusi[i][j]*10)%10 == 0) file.format("(%.0f)T[%d]", solusi[i][j],j); 
+                        else file.format("(%.2f)T[%d]", solusi[i][j],j); 
+                    } else {
+                        if ((solusi[i][j]*10)%10 == 0) file.format(" + (%.0f)T[%d]", solusi[i][j],j);
+                        else file.format(" + (%.2f)T[%d]", solusi[i][j],j);
+                    }
+                }
+            }
+            //Jika solusi di kolom ujung tidak 0
+            if(solusi[i][variabel+1] != 0){
+                if(tulisDulu){ //Jika solusi x-sekian tunggal
+                    if ((solusi[i][variabel+1]*10)%10 == 0) file.format("%.0f\n",solusi[i][variabel+1]);
+                    else file.format("%.2f%n",solusi[i][variabel+1]);
+                }   
+                else { //Konstanta x-sekian banyak
+                    if ((solusi[i][variabel+1]*10)%10 == 0) file.format(" + (%.0f)%n", solusi[i][variabel+1]);
+                    else file.format(" + (%.2f)%n", solusi[i][variabel+1]);
+                }
+            } else{
+                if(tulisDulu) file.format("0.0"); //Jika solusi x-sekian tunggal
+                else file.format("%n");
+                }
+            }
+            file.close();
+        } catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+    } 
+
+    //Menuliskan output file untuk SPL Metode Matriks Balikan
+    public void tulisFileSPLInvers(String namafile, Matriks Mhasil, Matriks Mobe){
+        try{
+            Formatter file = new Formatter(namafile);
+            file.format("Matriks hasil operasi baris elementer: %n");
+            for(int i=1; i<= Mobe.GetBrs(); i++){
+                for (int j=1; j<= Mobe.GetKol(); j++){
+                    if((Mobe.GetElmt(i,j)*10)%10 == 0) file.format("%.0f ", Mobe.GetElmt(i,j));
+                    else file.format("%.2f ", Mobe.GetElmt(i,j));
+                }
+                file.format("%n");
+            }
+            file.format("%nSolusi Sistem Persamaan: ");
+            file.format("%n");
+            for(int i = 1; i<=Mhasil.GetBrs(); i++){
+                if((Mhasil.GetElmt(i,1)*10)%10 == 0) file.format("x[%d] = %.0f%n", i,Mhasil.GetElmt(i,1));
+                else file.format("x[%d] = %.2f%n", i,Mhasil.GetElmt(i,1));
+            }
+            file.close();
+        } catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+
+    }
+
+    public void tulisFileSPLCramer(String namafile, double detM, double[] detMi,Matriks M){
+        try{
+            Formatter file = new Formatter(namafile);
+            if ((detM*10)%10 == 0)  file.format("det(M) = %.0f%n", detM);
+            else file.format("det(M) = %.2f%n", detM);
+            for(int j=1; j<=M.GetKol(); j++){
+                if((detMi[j]*10)%10 == 0) file.format("det(M%d) = %.0f%n", j, detMi[j]);
+                else file.format("det(M%d) = %.2f%n", j, detMi[j]);
+            }
+            file.format("%nSolusi Sistem Persamaan: %n");
+            for(int j=1; j<=M.GetKol(); j++){
+                if(((detMi[j]/detM)*10)%10 == 0) file.format("x[%d] = %.0f%n", j, (detMi[j]/detM)); 
+                else file.format("x[%d] = %.2f%n", j, (detMi[j]/detM));
+            }
+            file.close();
+        } catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+    }
 }
