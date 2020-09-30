@@ -2,29 +2,19 @@ import java.lang.Math;
 
 public class InterpolasiPolinom extends Matriks{
     private int derajat; //derajat polinom
-    private double nilaidicari; //x yang dicari y-nya
     private double [] solusi;
 
     public void setderajat(int x){
         this.derajat = x;
-    }
-    
-    public void setnilaidicari(float x){
-        this.nilaidicari = x;
     }
 
     public int getderajat(){
         return this.derajat;
     }
 
-    public double getnilaidicari(){
-        return this.nilaidicari;
-    }
-
     //KONSTRUKTOR
     public InterpolasiPolinom(int d, double x){
         derajat = d;
-        nilaidicari = x;
         Matriks = new double[derajat+1][derajat+2];
         solusi = new double[derajat];
     }
@@ -62,17 +52,18 @@ public class InterpolasiPolinom extends Matriks{
         }
     }
 
-    public void PolinomSolusi(Matriks M){
-        int i,j;
+    public void PolinomSolusi(Matriks MGaussJordan){
+        int i;
         solusi = new double [this.derajat+1];
 
-        for (i = 0 ; i <= M.GetBrs()-1; i++){
-            solusi[i] = M.GetElmt(i, M.GetKol()-1);
+        for (i = 0 ; i <= MGaussJordan.GetBrs()-1; i++){
+            solusi[i] = MGaussJordan.GetElmt(i, MGaussJordan.GetKol()-1);
         }
     }
 
-    public int SolusiInterpolasi(float x){
-        int i,y;
+    public double SolusiInterpolasi(float x){
+        int i;
+        double y;
 
         y = 0;
         for (i = 0; i < derajat+1; i++){
