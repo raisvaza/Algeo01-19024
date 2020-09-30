@@ -29,7 +29,7 @@ class Main {
             if (pilihan == 1) spl();
             // else if (pilihan == 2) det();
             // else if (pilihan == 3) inv();
-            // else if (pilihan == 4) interPol();
+            else if (pilihan == 4) Interpol();
             // else if (pilihan == 5) reg();
             else if(pilihan == 6) System.exit(0);
             else{
@@ -469,7 +469,65 @@ class Main {
         }
     }
 
-    static void interPol(){
-               
+    static void Interpol(){
+        System.out.println("=== Interpolasi Polinom ===");
+        System.out.println("1. Masukan keyboard");
+        System.out.println("2. Masukan file");
+        System.out.print("Masukkan pilihan: ");
+        int masukan = in.nextInt();
+        System.out.println();
+
+        Matriks M = new Matriks();
+             
+        while(true){
+            if(masukan == 1){
+                //Meminta input jumlah persamaan dan jumlah peubah
+                System.out.print("Masukkan jumlah titik diketahui: ");
+                int n = in.nextInt();
+                M.SetBrs(n);
+                M.SetKol(2);
+    
+                //Membaca persamaan
+                M.isiMatriks(n, 2);
+                System.out.println();
+                break;
+
+            } else if (masukan == 2) {
+                //Membaca matriks yang ada di file
+                String namaFile = in.nextLine();
+                File file  = new File(namaFile);
+
+                while(!file.exists()){
+                    System.out.print("Masukkan nama file: ");
+                    namaFile = in.nextLine();
+                    file = new File(namaFile);
+                }
+
+                M.bacaFile(file);
+                System.out.println();
+                break;
+
+            } else {
+                System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                masukan = in.nextInt();   
+            }
+        }
+
+        int d = M.GetBrs()-1;
+        float x = in.nextInt();
+        InterpolasiPolinom InPol = new InterpolasiPolinom(d);
+        M.tulisMatriks();
+        InPol.MatriksKordinatToPolinom(M);
+        M.tulisMatriks();
+        System.out.println();
+        M.eliminasiGaussJordan();
+        M.tulisMatriks();
+        System.out.println();
+        InPol.PolinomSolusi(M);
+        for (int i =0; i <= d; i++){
+            System.out.println(InPol.solusi[i]);
+        }
+        double y = InPol.SolusiInterpolasi(x);
+        System.out.println("y = " + y);
     }
 }
