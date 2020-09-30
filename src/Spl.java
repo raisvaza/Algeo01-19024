@@ -173,7 +173,7 @@ class Spl extends Matriks{
                     else System.out.printf(" + (%.2f)%n", solusi[i][variabel+1]);
                 }
             } else{
-                if(tulisDulu) System.out.println((double)0); //Jika solusi x-sekian tunggal
+                if(tulisDulu) System.out.println("0"); //Jika solusi x-sekian bernilai 0, dengan satu baris hanya berisi 1 elemen
                 else System.out.println();
             }
         }
@@ -324,7 +324,7 @@ class Spl extends Matriks{
                         else file.format(" + (%.2f)%n", solusi[i][variabel+1]);
                     }
                 } else{
-                    if(tulisDulu) file.format("0.0 %n"); //Jika solusi x-sekian tunggal
+                    if(tulisDulu) file.format("0%n"); //Jika solusi x-sekian tunggal
                     else file.format("%n");
                 }
             }
@@ -368,7 +368,7 @@ class Spl extends Matriks{
             //Jika solusi di kolom ujung tidak 0
             if(solusi[i][variabel+1] != 0){
                 if(tulisDulu){ //Jika solusi x-sekian tunggal
-                    if ((solusi[i][variabel+1]*10)%10 == 0) file.format("%.0f\n",solusi[i][variabel+1]);
+                    if ((solusi[i][variabel+1]*10)%10 == 0) file.format("%.0f%n",solusi[i][variabel+1]);
                     else file.format("%.2f%n",solusi[i][variabel+1]);
                 }   
                 else { //Konstanta x-sekian banyak
@@ -376,7 +376,7 @@ class Spl extends Matriks{
                     else file.format(" + (%.2f)%n", solusi[i][variabel+1]);
                 }
             } else{
-                if(tulisDulu) file.format("0.0"); //Jika solusi x-sekian tunggal
+                if(tulisDulu) file.format("0%n"); //Jika solusi x-sekian tunggal
                 else file.format("%n");
                 }
             }
@@ -429,5 +429,87 @@ class Spl extends Matriks{
         } catch(FileNotFoundException ex){
             System.out.println("Error terjadi");
         }
+    }
+
+        //Ubah ke Matriks Segitiga Atas
+    public void segitigaAtas(int jmlTukarBrs){
+        if(this.GetKol() == this.GetBrs()){
+            int brs = 1;
+            int kol = 1;
+            int indeksMaks;
+            while(brs <= this.GetBrs() && kol<=this.GetKol()){
+                indeksMaks = -1; 
+                //Mencari baris yang tidak bernilai 0 dalam suatu kolom
+                for(int i = brs; i <= this.GetBrs() && indeksMaks == -1; i++){
+                    if(this.GetElmt(i,kol) != 0) indeksMaks = i;
+                }
+    
+                //Jika tidak ada baris bernilai nol di sebuah kolom, lanjut ke kolom selanjutnya
+                if(indeksMaks == -1) kol++;
+    
+                //Jika ada akan diproses
+                else{                    
+                    if(brs != indeksMaks){
+                        jmlTukarBrs = jmlTukarBrs + 1;   //Menghitung jumlah tukar baris
+                        this.tukarBrs(brs,indeksMaks); //Tukar baris
+                    } 
+                    
+                    //Mengurangi seluruh kolom di bawah 1 utama pada baris dengan rasio baris lain
+                    for(int i = brs+1; i <= this.GetBrs(); i++){
+                        double rasio = (-1*this.GetElmt(i, kol)) / this.GetElmt(brs,kol);
+                        for (int j = kol; j <= this.GetKol(); j++){
+                            this.SetElmt(i, j , this.GetElmt(i,j) + rasio*this.GetElmt(brs,j));
+                        }
+                    }
+    
+                    //Lanjut ke baris dan pengecekan kolom selajuntnya
+                    brs++;
+                    kol++;
+                    
+                }
+            }
+        }
+
+    }
+
+    public double determinanM (Matriks M){
+        int jmlTukarBrs=0;
+        if(M.GetKol() == M.GetBrs()){
+            int brs = 1;
+            int kol = 1;
+            int indeksMaks;
+            while(brs <= M.GetBrs() && kol<=M.GetKol()){
+                indeksMaks = -1; 
+                //Mencari baris yang tidak bernilai 0 dalam suatu kolom
+                for(int i = brs; i <= M.GetBrs() && indeksMaks == -1; i++){
+                    if(M.GetElmt(i,kol) != 0) indeksMaks = i;
+                }
+    
+                //Jika tidak ada baris bernilai nol di sebuah kolom, lanjut ke kolom selanjutnya
+                if(indeksMaks == -1) kol++;
+    
+                //Jika ada akan diproses
+                else{                    
+                    if(brs != indeksMaks){
+                        jmlTukarBrs = jmlTukarBrs + 1;   //Menghitung jumlah tukar baris
+                        M.tukarBrs(brs,indeksMaks); //Tukar baris
+                    } 
+                    
+                    //Mengurangi seluruh kolom di bawah 1 utama pada baris dengan rasio baris lain
+                    for(int i = brs+1; i <= M.GetBrs(); i++){
+                        double rasio = (-1*M.GetElmt(i, kol)) / M.GetElmt(brs,kol);
+                        for (int j = kol; j <= M.GetKol(); j++){
+                            M.SetElmt(i, j , M.GetElmt(i,j) + rasio*M.GetElmt(brs,j));
+                        }
+                    }
+    
+                    //Lanjut ke baris dan pengecekan kolom selajuntnya
+                    brs++;
+                    kol++;
+                    
+                }
+            }
+        }
+        return M.kaliDiagonal() * this.pangkat(-1,jmlTukarBrs);
     }
 }

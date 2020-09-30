@@ -115,12 +115,17 @@ class Main {
                 //Variabel solusi
                 double[][] solusi = new double[100][100];
                 int[] jumlahSolusi = new int[1];
+                Matriks Mmanip = new Matriks(M.GetBrs(),M.GetKol());
+                M.salinMatriks(Mmanip);
+                Mmanip.eliminasiGaussJordan();
 
                 //Scanner output file
                 Scanner filex = new Scanner(System.in);
                                         
                 //Menuliskan solusi
                 spl.solusiEliminasiGauss(M, solusi, jumlahSolusi);
+                spl.solusiEliminasiGaussJordan(Mmanip, solusi, jumlahSolusi);
+
                 if(jumlahSolusi[0] == 0) {
                     System.out.println("Tidak ada solusi"); //Tidak ada solusi
                     System.out.print("\nMasukkan nama file output: ");
@@ -128,6 +133,7 @@ class Main {
                     try{
                         Formatter file = new Formatter(namafile);
                         file.format("Tidak ada solusi");
+                        file.close();
                     } catch(FileNotFoundException ex){
                         System.out.println("Error terjadi");
                     }
@@ -394,9 +400,7 @@ class Main {
 
                 //Menghitung deteminan M
                 M.salinMatriks(Mtemp);
-                int jmlhTkrBrs = 0;
-                M.segitigaBawah(jmlhTkrBrs);
-                double detM = M.kaliDiagonal() * spl.pangkat(-1,jmlhTkrBrs);
+                double detM = spl.determinanM(M);
 
                 if (M.GetBrs() == M.GetKol()){
                     if ((detM*10)%10 == 0)  System.out.printf("det(M) = %.0f\n", detM);
@@ -406,9 +410,7 @@ class Main {
                     for(int j=1; j<=M.GetKol(); j++){
                         Mtemp.salinMatriks(M);
                         spl.ubahKol(M,konstanta,j);
-                        int jumlahTkrBrs = 0;
-                        M.segitigaBawah(jumlahTkrBrs);
-                        detMi[j] = M.kaliDiagonal() * spl.pangkat(-1,jumlahTkrBrs);
+                        detMi[j] = spl.determinanM(M);
                         if((detMi[j]*10)%10 == 0) System.out.printf("det(M%d) = %.0f\n", j, detMi[j]);
                         else System.out.printf("det(M%d) = %.2f\n", j, detMi[j]);
                     }
