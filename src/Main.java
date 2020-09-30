@@ -524,7 +524,7 @@ class Main {
         M.tulisMatriks();
         System.out.println();
         InPol.PolinomSolusi(M);
-        for (int i =0; i <= d; i++){
+        for (int i =1; i <= d+1; i++){
             System.out.println(InPol.solusi[i]);
         }
         double y = InPol.SolusiInterpolasi(x);
