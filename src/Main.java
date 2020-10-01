@@ -580,7 +580,6 @@ class Main {
         int var = M.GetKol()-1;
         int n = M.GetBrs();
         M.tulisMatriks();
-        double x = in.nextInt();
         RegresiLinier Linier = new RegresiLinier(n, var);
         Linier.SampelToRegresi(M);
         M.tulisMatriks();
