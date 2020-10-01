@@ -7,7 +7,7 @@ public class RegresiLinier extends Matriks{
     public RegresiLinier(int N, int var){
         this.NSampel = N;
         this.NVar = var;
-        this.solusi = new double[var+1];
+        this.solusi = new double[var+2];
         this.Matriks = new double[N+1][var+2];
     }
 
@@ -17,7 +17,7 @@ public class RegresiLinier extends Matriks{
 
         brs = M.GetBrs();
         kol = M.GetKol();
-        temp = new double[kol][kol+1];
+        temp = new double[kol+1][kol+2];
 
         //nilai matriks M pada indeks baris = 0 atau indeks kolom = 0 dibuat 1
         for (i = 0; i <= brs; i++){
