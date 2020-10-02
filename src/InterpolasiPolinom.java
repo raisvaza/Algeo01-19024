@@ -42,7 +42,6 @@ public class InterpolasiPolinom extends Matriks{
                 }
             }
         }
-
         M.SetBrs(this.derajat+1);
         M.SetKol(this.derajat+2);
         for (i = 1; i <= M.GetBrs(); i++){

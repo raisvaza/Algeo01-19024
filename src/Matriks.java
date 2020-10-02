@@ -244,8 +244,8 @@ class Matriks {
         }
     }
 
-    //Ubah ke Matriks Segitiga Bawah
-    public void segitigaBawah(int jmlTukarBrs){
+    //Ubah ke Matriks Segitiga Atas
+    public void segitigaAtas(int jmlTukarBrs){
         if(this.GetKol() == this.GetBrs()){
             int brs = 1;
             int kol = 1;
@@ -261,10 +261,11 @@ class Matriks {
                 if(indeksMaks == -1) kol++;
     
                 //Jika ada akan diproses
-                else{
-                    this.tukarBrs(brs,indeksMaks); //Tukar baris
-                    
-                    if(brs != indeksMaks) jmlTukarBrs+=1;   //Menghitung jumlah tukar baris
+                else{                    
+                    if(brs != indeksMaks){
+                        jmlTukarBrs = jmlTukarBrs + 1;   //Menghitung jumlah tukar baris
+                        this.tukarBrs(brs,indeksMaks); //Tukar baris
+                    } 
                     
                     //Mengurangi seluruh kolom di bawah 1 utama pada baris dengan rasio baris lain
                     for(int i = brs+1; i <= this.GetBrs(); i++){
