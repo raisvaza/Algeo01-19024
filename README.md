@@ -1,7 +1,7 @@
 # Algeo01-19024
 
 ## Anggota Kelompok
-- M. Hilal Alhady (13519024)
+- M. Hilal Alhamdy (13519024)
 - Rais Vaza Man Tazakka (13519060)
 - Mgs. Tabrani (13519122)
 
