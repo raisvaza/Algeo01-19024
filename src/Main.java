@@ -27,8 +27,8 @@ class Main {
 
         while(true){
             if (pilihan == 1) spl();
-            // else if (pilihan == 2) det();
-            // else if (pilihan == 3) inv();
+            else if (pilihan == 2) det();
+            else if (pilihan == 3) inv();
             else if (pilihan == 4) Interpol();
             else if (pilihan == 5) RegresiLin();
             else if(pilihan == 6) System.exit(0);
@@ -469,6 +469,361 @@ class Main {
                 System.out.println();
             }
         }
+    }
+    
+        static void det(){
+        System.out.println();
+        System.out.println("=== Determinan ===");
+        System.out.println("1. Metode Segitiga Atas");
+        System.out.println("2. Metode Segitiga Bawah");
+        System.out.println("3. Metode Ekspansi Kofaktor");
+        System.out.println("99. Kembali");
+        System.out.println();
+        System.out.print("Masukkan pilihan: ");
+        int pilihan = in.nextInt();
+        System.out.println();
+
+        while(true){
+            if(pilihan == 99) utama();
+            else if(pilihan == 1){
+                System.out.println("=== Metode Segitiga Atas ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+
+                //Membuat objek Spl
+                Spl spl = new Spl();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+               
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan Banyaknya Baris: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan Banyaknya Kolom: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+    
+                        //Membaca persamaan
+                        M.isiMatriks(n, m);
+                        System.out.println();
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+                int jmlhTkrBrs = 0;
+                //Mengubah matriks augmented ke Matriks eselon
+                M.segitigaAtas(jmlhTkrBrs);
+                System.out.println("Matriks Segitiga Atas: ");
+                
+                //Tulis Matriks segitiga atas
+                M.tulisMatriks();
+                System.out.println();
+                double detM = M.kaliDiagonal() * spl.pangkat(-1,jmlhTkrBrs);
+
+                if (M.GetBrs() == M.GetKol()){
+                    if ((detM*10)%10 == 0)  System.out.printf("det(M) = %.0f\n", detM);
+                    else System.out.printf("det(M) = %.2f\n", detM);
+                }
+                System.out.println("\nMenuju menu utama....");
+                utama();
+
+            }else if(pilihan == 2){
+                System.out.println("=== Metode Segitiga Bawah ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+
+                //Membuat objek Spl
+                Spl spl = new Spl();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+               
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan Banyaknya Baris: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan Banyaknya Kolom: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+    
+                        //Membaca persamaan
+                        M.isiMatriks(n, m);
+                        System.out.println();
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+                int jmlhTkrBrs = 0;
+                //Mengubah matriks augmented ke Matriks eselon
+                M.segitigaBawah(jmlhTkrBrs);
+                System.out.println("Matriks Segitiga Bawah: ");
+                
+                //Tulis Matriks segitiga atas
+                M.tulisMatriks();
+                System.out.println();
+                double detM = M.kaliDiagonal() * spl.pangkat(-1,jmlhTkrBrs);
+
+                if (M.GetBrs() == M.GetKol()){
+                    if ((detM*10)%10 == 0)  System.out.printf("det(M) = %.0f\n", detM);
+                    else System.out.printf("det(M) = %.2f\n", detM);
+                }
+                System.out.println("\nMenuju menu utama....");
+                utama();
+
+            }else if (pilihan == 3){
+                System.out.println("=== Metode Ekspansi Kofaktor ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+               
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan Banyaknya Baris: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan Banyaknya Kolom: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+    
+                        //Membaca persamaan
+                        M.isiMatriks(n, m);
+                        System.out.println();
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+                System.out.println("Hasil Ekpansi Kofaktor");
+
+                Spl EK = new Spl();
+                
+                System.out.printf("det(M) = "+EK.determinanM(M));
+
+                System.out.println("\nMenuju menu utama....");
+                utama();
+
+            }      
+            else{
+                System.out.print("Masukan salah. Silakan ulangi masukan! ");
+                pilihan = in.nextInt();
+                System.out.println();
+            }       
+        }
+    }
+
+    static void inv(){
+        System.out.println();
+        System.out.println("=== Matriks Balikan ===");
+        System.out.println("1. Metode Eliminasi Gauss");
+        System.out.println("2. Metode Ekspansi Kofaktor");
+        System.out.println("99. Kembali");
+        System.out.println();
+        System.out.print("Masukkan pilihan: ");
+        int pilihan = in.nextInt();
+        System.out.println();
+
+        while(true){
+            if(pilihan == 99) utama();
+            else if(pilihan == 1){
+                System.out.println("=== Metod Eliminasi Gauss ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+               
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan Banyaknya Baris: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan Banyaknya Kolom: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+    
+                        //Membaca persamaan
+                        M.isiMatriks(n, m);
+                        System.out.println();
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+                Matriks Mtemp = new Matriks();
+                if(M.GetBrs() == M.GetKol()){
+                    //Menerapkan eliminasi Gauss-Jordan untuk memindahkan matriks identitas ke kiri
+                    Mtemp.SetBrs(M.GetBrs());
+                    Mtemp.SetKol(2*M.GetKol());
+                    M.salinMatriks(Mtemp);
+                    M.isiIdentitas(Mtemp);
+                    Mtemp.eliminasiGaussJordan();
+                    System.out.println();
+
+                    MatriksBalikan MB = new MatriksBalikan();
+                    System.out.println("Matriks Hasil");
+                    MB.OBEInv(Mtemp);
+                }
+                System.out.println("\nMenuju menu utama....");
+                utama();
+            
+            }else if (pilihan==2){
+                System.out.println("=== Metod Ekspansi Kofaktor ===");
+                System.out.println("1. Masukan keyboard");
+                System.out.println("2. Masukan file");
+                System.out.print("Masukkan pilihan: ");
+                int masukan = in.nextInt();
+                System.out.println();
+
+
+                //Membuat objek Matriks
+                Matriks M = new Matriks();
+               
+                
+                while(true){
+                    if(masukan == 1){
+                        //Meminta input jumlah persamaan dan jumlah peubah
+                        System.out.print("Masukkan Banyaknya Baris: ");
+                        int n = in.nextInt();
+                        System.out.print("Masukkan Banyaknya Kolom: ");
+                        int m = in.nextInt();
+                        M.SetBrs(n);
+                        M.SetKol(m);
+    
+                        //Membaca persamaan
+                        M.isiMatriks(n, m);
+                        System.out.println();
+                        break;
+
+                    } else if (masukan == 2) {
+                        //Membaca matriks yang ada di file
+                        String namaFile = in.nextLine();
+                        File file  = new File(namaFile);
+
+                        while(!file.exists()){
+                            System.out.print("Masukkan nama file: ");
+                            namaFile = in.nextLine();
+                            file = new File(namaFile);
+                        }
+
+                        M.bacaFile(file);
+                        System.out.println();
+                        break;
+
+                    }else{
+                        System.out.print("Masukan salah. Silakan masukkan ulang! ");
+                        masukan = in.nextInt();   
+                    }
+                }
+                MatriksBalikan MInv = new MatriksBalikan();
+                float [][]inv = new float[M.GetBrs()][M.GetBrs()]; 
+
+                System.out.println("Matriks Balikan");
+                if (MInv.inverse(M, inv)){
+                    MInv.display(inv, M);
+                }
+                System.out.println("\nMenuju menu utama....");
+                utama();
+            }
+            else{
+                System.out.print("Masukan salah. Silakan ulangi masukan! ");
+                pilihan = in.nextInt();
+                System.out.println();
+            }     
+
+        }   
+
     }
 
     static void Interpol(){
