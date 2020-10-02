@@ -75,7 +75,7 @@ public class RegresiLinier extends Matriks{
                 dicari[i] = 1;
             }
             else {
-                dicari[i] = in.nextInt();
+                dicari[i] = in.nextDouble();
             }
         }
 

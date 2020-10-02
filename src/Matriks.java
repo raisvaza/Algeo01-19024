@@ -59,7 +59,7 @@ class Matriks {
 
         for (i=1; i<=N; i++){
             for (j=1; j<=M; j++){
-                this.Matriks[i][j] = in.nextInt();
+                this.Matriks[i][j] = in.nextDouble();
             }
         }
     }

@@ -516,7 +516,7 @@ class Main {
         }
 
         int d = M.GetBrs()-1;
-        float x = in.nextInt();
+        float x = in.nextFloat();
         InterpolasiPolinom InPol = new InterpolasiPolinom(d);
         M.tulisMatriks();
         InPol.MatriksKordinatToPolinom(M);
@@ -531,6 +531,19 @@ class Main {
         }
         double y = InPol.SolusiInterpolasi(x);
         System.out.println("y = " + y);
+        Scanner filex = new Scanner(System.in);
+        System.out.print("\nMasukkan nama file output: ");
+        String namafile = filex.nextLine();
+        try{
+            Formatter file = new Formatter(namafile);
+            file.format("x = " + x);
+            file.format("%ny = " + y);
+            file.close();
+        }catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+        System.out.println("\nMenuju menu utama ....\n");
+        utama();
     }
 
     static void RegresiLin(){
@@ -593,5 +606,17 @@ class Main {
         }
         double y = Linier.Solusi();
         System.out.println("y = " + y);
+        Scanner filex = new Scanner(System.in);
+        System.out.print("\nMasukkan nama file output: ");
+        String namafile = filex.nextLine();
+        try{
+            Formatter file = new Formatter(namafile);
+            file.format("y = " + y);
+            file.close();
+        }catch(FileNotFoundException ex){
+            System.out.println("Error terjadi");
+        }
+        System.out.println("\nMenuju menu utama ....\n");
+        utama();
     }
 }
