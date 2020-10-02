@@ -1,9 +1,12 @@
 # Algeo01-19024
 
-## Link Buat Laporan
-https://docs.google.com/document/d/1NkHhXP9XvlY5Ir_qipJVnDc7OsVGMQsNQwBOh5ShlZI/edit
+## Anggota Kelompok
+M. Hilal Alhady (13519024)
+Rais Vaza Man Tazakka (13519060)
+Mgs. Tabrani (13519122)
 
 ## Gambaran Program
+Program akan meminta masukan dari keyboard dan dari file. Kemudian program akan memberikan solusi dalam bentuk file dan ditampilkan ke terminal.
 
 #### Sistem Persamaan Linier
 1. Metode Eliminasi Gauss
