@@ -25,13 +25,11 @@ public class MatriksBalikan extends Matriks{
         { 
             for (int Kol = 1; Kol <= M.GetKol(); Kol++) 
             { 
-                // Copying into temporary matrix only those element 
-                // which are not in given row and column 
+               
                 if ( Brs != p && Kol != q) 
                 { 
                     temp[i][j++] = M.GetElmt(Brs,Kol);
-                    // Row is filled, so increase row index and 
-                    // reset col index 
+                  
                     if (j == M.GetBrs() - 1) 
                     { 
                         j = 1; 
@@ -44,7 +42,7 @@ public class MatriksBalikan extends Matriks{
       
     public double determinant(Matriks M) 
     { 
-        double D = 0; // Initialize result 
+        double D = 0; 
       
        
         if (M.GetBrs() == 1) 
@@ -103,7 +101,7 @@ public class MatriksBalikan extends Matriks{
         double det = determinant(M); 
         if (det == 0) 
         { 
-            System.out.print("Singular matrix, can't find its inverse"); 
+            System.out.print("matriks singular , tidak dapat di invers"); 
             return false; 
         } 
       
