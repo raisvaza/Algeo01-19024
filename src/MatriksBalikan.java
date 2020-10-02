@@ -1,7 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.lang.*;
-
 
 public class MatriksBalikan extends Matriks{
     public Scanner in = new Scanner(System.in);
@@ -11,7 +9,7 @@ public class MatriksBalikan extends Matriks{
         int i, j;
 
         for ( i= 1 ; i <= M.GetBrs(); i++){
-            for ( j = M.GetKol()/2 + 1 ; i <= M.GetKol(); j++){
+            for ( j = M.GetKol()/2 + 1 ; j <= M.GetKol(); j++){
                 System.out.print( M.GetElmt(i,j) + " ");
             }
         System.out.println();
@@ -63,7 +61,8 @@ public class MatriksBalikan extends Matriks{
         { 
             // Getting Cofactor of A[0][f] 
             GetKofaktor(M, temp, 1, f); 
-            D += sign * M.GetElmt(1,f) * determinant(M); 
+            Spl spl = new Spl();
+            D += sign * M.GetElmt(1,f) * spl.determinanM(M); 
       
             // terms are to be added with alternate sign 
             sign = -sign; 
@@ -140,16 +139,13 @@ public class MatriksBalikan extends Matriks{
             System.out.println(); 
         } 
     } 
-    static void display(float A[][], Matriks M) 
+    public void display(float A[][], Matriks M) 
     { 
         for (int i = 1; i < M.GetBrs(); i++) 
         { 
             for (int j = 1; j < M.GetKol(); j++) 
-                System.out.printf("%.6f ",A[i][j]); 
+                System.out.printf("%.2f ",A[i][j]); 
             System.out.println(); 
         } 
     } 
-
-
-
 }
