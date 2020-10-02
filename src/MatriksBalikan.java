@@ -1,7 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.lang.*;
-
 
 public class MatriksBalikan extends Matriks{
     public Scanner in = new Scanner(System.in);
@@ -146,7 +144,7 @@ public class MatriksBalikan extends Matriks{
         for (int i = 1; i < M.GetBrs(); i++) 
         { 
             for (int j = 1; j < M.GetKol(); j++) 
-                System.out.printf("%.6f ",A[i][j]); 
+                System.out.printf("%.2f ",A[i][j]); 
             System.out.println(); 
         } 
     } 
