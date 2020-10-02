@@ -1,49 +1,75 @@
-import java.util.*;
-
+import java.lang.Math;
 
 public class InterpolasiPolinom extends Matriks{
     public int derajat; //derajat polinom
-    public float nilaidicari; //x yang dicari y-nya
-    
+    public double [] solusi;
+
     public void setderajat(int x){
         this.derajat = x;
-    }
-    
-    public void setnilaidicari(float x){
-        this.nilaidicari = x;
     }
 
     public int getderajat(){
         return this.derajat;
     }
 
-    public float getnilaidicari(){
-        return this.nilaidicari;
+    //KONSTRUKTOR
+    public InterpolasiPolinom(int d){
+        derajat = d;
+        Matriks = new double[derajat+1][derajat+2];
+        solusi = new double[derajat+2];
     }
 
-    public void MatriksKordinatToPolinom(){
+    public void MatriksKordinatToPolinom(Matriks M){
+        /*Mengubah Matriks kordinat ke matriks polinom */
         int i,j,k;
         double [] [] temporary;
-        temporary = new double[this.derajat+1][this.derajat+2];
+        temporary = new double[this.derajat+2][this.derajat+3];
+        k = 1;
 
-        for (i = 0; i < this.brs; i++){
-            for (j = 0; j < this.kol; j++){
-                if (j != 1){
-                  for (k = 0; k < derajat+1; k++){
-                    temporary[i][k] = Math.pow(this.Matriks[i][j],k);
+        for (i = 1; i <= M.brs; i++)
+        {
+            for (j = 1; j <= M.kol; j++)
+            {
+                if (j == 1)
+                {
+                  for (k = 1; k <= derajat+1; k++)
+                  {
+                    temporary[i][k] = Math.pow(M.GetElmt(i, j),k-1);
                   }
-                } else {
-                    temporary[i][derajat+1] = this.Matriks[i][1];
+                } else if (j == 2)
+                {
+                    temporary[i][derajat+2] = M.GetElmt(i, j);
                 }
             }
         }
-
-        this.SetBrs(this.derajat+1);
-        this.SetKol(this.derajat+2);
-        for (i = 0; i <= this.GetBrs(); i++){
-            for (j = 0; j <= this.GetKol(); j++){
-                this.Matriks[i][j] = temporary[i][j];
+        M.SetBrs(this.derajat+1);
+        M.SetKol(this.derajat+2);
+        for (i = 1; i <= M.GetBrs(); i++){
+            for (j = 1; j <= M.GetKol(); j++){
+                M.SetElmt(i, j, temporary[i][j]);
             }
         }
+    }
+
+    public void PolinomSolusi(Matriks MGaussJordan){
+        int i;
+        solusi = new double [this.derajat+2];
+
+        for (i = 1 ; i <= MGaussJordan.GetBrs(); i++){
+            solusi[i] = MGaussJordan.GetElmt(i, MGaussJordan.GetKol());
+        }
+    }
+
+    public double SolusiInterpolasi(float x){
+        int i;
+        double y;
+
+        y = 0;
+        for (i = 1; i <= derajat+1; i++){
+            y += Math.pow(x,i-1)*solusi[i];
+        }
+
+        return y;
+
     }
 }
