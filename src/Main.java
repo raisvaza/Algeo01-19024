@@ -518,13 +518,17 @@ class Main {
         int d = M.GetBrs()-1;
         float x = in.nextFloat();
         InterpolasiPolinom InPol = new InterpolasiPolinom(d);
+        System.out.print("\nMatriks:");
         M.tulisMatriks();
         InPol.MatriksKordinatToPolinom(M);
+        System.out.print("\nMatriks Polinom:");
         M.tulisMatriks();
         System.out.println();
         M.eliminasiGaussJordan();
+        System.out.print("\nMatriks Eselon Baris Tereduksi:");
         M.tulisMatriks();
         System.out.println();
+        System.out.print("\nKoefisien Solusi: ");
         InPol.PolinomSolusi(M);
         for (int i =1; i <= d+1; i++){
             System.out.println(InPol.solusi[i]);
@@ -594,12 +598,16 @@ class Main {
         }
         int var = M.GetKol()-1;
         int n = M.GetBrs();
+        System.out.print("\nMatriks:");
         M.tulisMatriks();
         RegresiLinier Linier = new RegresiLinier(n, var);
         Linier.SampelToRegresi(M);
+        System.out.print("\nSistem Persamaan Linier:");
         M.tulisMatriks();
         M.eliminasiGaussJordan();
+        System.out.print("\nMatriks Eselon Baris Tereduksi:");
         M.tulisMatriks();
+        System.out.print("\nKoefisien Solusi:");
         Linier.KoefisienSolusi(M);
         for (int i =1; i <= var+1; i++){
             System.out.println(Linier.solusi[i]);
