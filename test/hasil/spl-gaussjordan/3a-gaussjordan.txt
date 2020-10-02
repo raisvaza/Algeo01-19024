@@ -1,0 +1,11 @@
+Matriks Eselon Baris Tereduksi: 
+1 0 0 0 -0.22 
+0 1 0 0 0.18 
+0 0 1 0 0.71 
+0 0 0 1 -0.26 
+
+Solusi dari sistem persamaan adalah: 
+x[1] = -0.22
+x[2] = 0.18
+x[3] = 0.71
+x[4] = -0.26
