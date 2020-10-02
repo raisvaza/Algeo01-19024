@@ -1,9 +1,9 @@
 # Algeo01-19024
 
 ## Anggota Kelompok
-M. Hilal Alhady (13519024)
-Rais Vaza Man Tazakka (13519060)
-Mgs. Tabrani (13519122)
+- M. Hilal Alhady (13519024)
+- Rais Vaza Man Tazakka (13519060)
+- Mgs. Tabrani (13519122)
 
 ## Gambaran Program
 Program akan meminta masukan dari keyboard dan dari file. Kemudian program akan memberikan solusi dalam bentuk file dan ditampilkan ke terminal. Gunakan jdk versi 14.
