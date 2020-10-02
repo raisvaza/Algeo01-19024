@@ -18,22 +18,21 @@ public class MatriksBalikan extends Matriks{
         }
 
     }
+    /*Mencari kofaktor */
     public void GetKofaktor(Matriks M ,double temp[][], int p, int q) 
     { 
         int i = 1, j = 1; 
       
-        // Looping for each element of the matrix 
+        // Pengulangan dari setiap elemen Matriks
         for (int Brs = 1; Brs <= M.GetBrs(); Brs++) 
         { 
             for (int Kol = 1; Kol <= M.GetKol(); Kol++) 
             { 
-                // Copying into temporary matrix only those element 
-                // which are not in given row and column 
+               
                 if ( Brs != p && Kol != q) 
                 { 
                     temp[i][j++] = M.GetElmt(Brs,Kol);
-                    // Row is filled, so increase row index and 
-                    // reset col index 
+                 
                     if (j == M.GetBrs() - 1) 
                     { 
                         j = 1; 
@@ -44,8 +43,7 @@ public class MatriksBalikan extends Matriks{
         } 
     } 
       
-    /* Recursive function for finding determinant of matrix. 
-    n is current dimension of A[][]. */
+    /* fungsi pengulangan untuk mencari determinan matriks. */
     public double determinant(Matriks M) 
     { 
         double D = 0; // Initialize result 
@@ -72,7 +70,7 @@ public class MatriksBalikan extends Matriks{
         return D; 
     } 
       
-    // Function to get adjoint of A[N][N] in adj[N][N]. 
+    // Fungsi untuk mendapatkan adjoint dari A[N][N] in adj[N][N]. 
     public void adjoint(Matriks M,int [][]adj) 
     { 
         if (M.GetBrs() == 1) 
@@ -89,7 +87,7 @@ public class MatriksBalikan extends Matriks{
         { 
             for (int j = 1; j < M.GetKol(); j++) 
             { 
-                // Get cofactor of A[i][j] 
+                // Get Kofaktor of A[i][j] 
                 GetKofaktor(M, temp, i, j); 
       
                 // sign of adj[j][i] positive if sum of row 
@@ -103,8 +101,8 @@ public class MatriksBalikan extends Matriks{
         } 
     } 
       
-    // Function to calculate and store inverse, returns false if 
-    // matrix is singular 
+    // Fungsi ini menghitung nilai Matriks Balikan, dan menampilkan salah kalau
+    // matriks ini singular
     public boolean inverse(Matriks M, float [][]inverse) 
     { 
         // Find determinant of A[][] 
@@ -115,11 +113,11 @@ public class MatriksBalikan extends Matriks{
             return false; 
         } 
       
-        // Find adjoint 
+        // Menemukan Adjoint
         int [][]adj = new int[M.GetBrs()][M.GetKol()]; 
         adjoint(M, adj); 
       
-        // Find Inverse using formula "inverse(A) = adj(A)/det(A)" 
+        // menemukan Inverse dengan menggunakan formula "inverse(A) = adj(A)/det(A)" 
         for (int i = 1; i < M.GetBrs(); i++) 
             for (int j = 1; j < M.GetKol(); j++) 
                 inverse[i][j] = adj[i][j]/(float)det; 
@@ -127,10 +125,8 @@ public class MatriksBalikan extends Matriks{
         return true; 
     } 
       
-    // Generic function to display the matrix. We use it to display 
-    // both adjoin and inverse. adjoin is integer matrix and inverse 
-    // is a float. 
-      
+    // Fungsi pada display, menampilkan hasil dari adjoin dan inversnya
+
     public void display(int A[][], Matriks M) 
     { 
         for (int i = 1; i < M.GetBrs(); i++) 
